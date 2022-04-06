@@ -56,12 +56,23 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       //
       body: Padding(
         padding: const EdgeInsets.all(20),
-        
+
         child: ListView.builder(
           itemCount: lista.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(lista[index].nome),
+              title: Text(lista[index].nome,style: const TextStyle(fontSize: 28),),
+              subtitle: Text('Capital: ${lista[index].capital} / Área: ${lista[index].area} km²'),
+              leading: const Icon(Icons.place_outlined),
+              trailing: const Icon(Icons.arrow_right),
+              //Evento associado ao item da Lista
+              onTap: (){
+                //
+                // NAVEGAÇÃO
+                // Abrir a tela de detalhes passando como argumento os
+                // dados do PAIS selecionado pelo usuário
+                Navigator.pushNamed(context, 't2', arguments: lista[index]);
+              },
             );
           },
         ),

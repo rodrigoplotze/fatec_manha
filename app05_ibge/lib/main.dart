@@ -13,6 +13,6 @@ void main(){
         't1' : (context) => const TelaPrincipal(),
         't2' : (context) => const TelaDetalhes(),
       },
-    ),
+    )
   );
 }
