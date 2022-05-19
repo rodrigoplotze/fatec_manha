@@ -38,6 +38,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   @override
   void initState() {
     super.initState();
+    print('init');
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await carregarJson();
     });
@@ -56,27 +57,39 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
       //
       body: Padding(
         padding: const EdgeInsets.all(20),
-
         child: ListView.builder(
           itemCount: lista.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(lista[index].nome,style: const TextStyle(fontSize: 28),),
-              subtitle: Text('Capital: ${lista[index].capital} / Área: ${lista[index].area} km²'),
+              title: Text(
+                lista[index].nome,
+                style: const TextStyle(fontSize: 28),
+              ),
+              subtitle: Text(
+                  'Capital: ${lista[index].capital} / Área: ${lista[index].area} km²'),
               leading: const Icon(Icons.place_outlined),
-              trailing: const Icon(Icons.arrow_right),
+              trailing: lista[index].favorito == true
+                  ? const Icon(Icons.favorite)
+                  : const SizedBox(
+                      width: 1,
+                    ),
+
               //Evento associado ao item da Lista
-              onTap: (){
+              onTap: () {
                 //
                 // NAVEGAÇÃO
                 // Abrir a tela de detalhes passando como argumento os
                 // dados do PAIS selecionado pelo usuário
-                Navigator.pushNamed(context, 't2', arguments: lista[index]);
+                var obj = Navigator.pushNamed(
+                  context,
+                  't2',
+                  arguments: lista[index],
+                );
+                print(obj.toString());
               },
             );
           },
         ),
-
       ),
     );
   }

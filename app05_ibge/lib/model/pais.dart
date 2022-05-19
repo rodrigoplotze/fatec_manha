@@ -5,6 +5,7 @@ class Pais{
   String area;
   String capital;
   String historico;
+  bool favorito = false;
 
   Pais(
     this.id,this.abreviatura,this.nome,
