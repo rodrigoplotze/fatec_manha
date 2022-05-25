@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -106,6 +107,17 @@ class _CriarContaPageState extends State<CriarContaPage> {
     FirebaseAuth.instance
     .createUserWithEmailAndPassword(email: email, password: senha)
     .then((res){
+
+      //ARMAZENAR O NOME NA COLEÇÃO DE USUÁRIOS
+      FirebaseFirestore.instance
+        .collection('usuarios')
+        .add(
+          {
+            "uid" : res.user!.uid.toString(),
+            "nome" : nome,
+          }
+        );
+
       //TUDO CERTO!!
       sucesso(context,'Usuário criado com sucesso!');
       Navigator.pop(context);

@@ -14,8 +14,28 @@ class _InserirPageState extends State<InserirPage> {
   var txtNome = TextEditingController();
   var txtPreco = TextEditingController();
 
+  retornarDocumentoById(id) async {
+    await FirebaseFirestore.instance
+        .collection('cafes')
+        .doc(id)
+        .get()
+        .then((doc) {
+      txtNome.text = doc.get('nome');
+      txtPreco.text = doc.get('preco');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    //Recuperar o ID do Café
+    var id = ModalRoute.of(context)!.settings.arguments;
+
+    if (id != null) {
+      if (txtNome.text.isEmpty && txtPreco.text.isEmpty) {
+        retornarDocumentoById(id);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Café Store'),
@@ -41,18 +61,30 @@ class _InserirPageState extends State<InserirPage> {
                     style: OutlinedButton.styleFrom(
                       primary: Colors.brown.shade900,
                     ),
-                    child: const Text('salvar'),
+                    child: Text( (id==null) ? 'salvar' : 'alterar'),
                     onPressed: () {
-                      //Adicionar um novo documento
-                      FirebaseFirestore.instance
-                        .collection('cafes').add(
-                        {
-                          "nome": txtNome.text,
-                          "preco": txtPreco.text,
-                        },
-                      );
-                      sucesso(context,'O item foi adicionado com sucesso.');
-
+                      if (id == null) {
+                        //Adicionar um novo documento
+                        FirebaseFirestore.instance.collection('cafes').add(
+                          {
+                            "nome": txtNome.text,
+                            "preco": txtPreco.text,
+                          },
+                        );
+                        sucesso(context, 'O item foi adicionado com sucesso.');
+                      } else {
+                        //Alterar um documento
+                        FirebaseFirestore.instance
+                            .collection('cafes')
+                            .doc(id.toString())
+                            .set(
+                          {
+                            "nome": txtNome.text,
+                            "preco": txtPreco.text,
+                          },
+                        );
+                        sucesso(context, 'O item foi alterado com sucesso.');
+                      }
 
                       Navigator.pop(context);
                     },
