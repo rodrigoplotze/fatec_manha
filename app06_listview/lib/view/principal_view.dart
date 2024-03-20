@@ -40,8 +40,25 @@ class _PrincipalViewState extends State<PrincipalView> {
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
+
+                leading: Icon(Icons.person_2_outlined),
+
                 title: Text(dados[index].nome),
                 subtitle: Text(dados[index].email),
+
+                onTap: (){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(dados[index].nome))    
+                  );
+                },
+                hoverColor: Colors.red.shade100,
+
+                onLongPress: (){
+                  setState(() {
+                    dados.removeAt(index);
+                  });
+                },
+
               ),
             );
           },
