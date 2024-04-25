@@ -85,15 +85,21 @@ class _LoginViewState extends State<LoginView> {
                             },
                             child: Text('cancelar'),
                           ),
+
                           ElevatedButton(
                             onPressed: () {
+                              
                               LoginController().esqueceuSenha(
                                 context,
                                 txtEmailEsqueceuSenha.text,
                               );
+                              
+                              Navigator.pop(context);
+
                             },
                             child: Text('enviar'),
                           ),
+
                         ],
                       );
                     },
@@ -103,6 +109,7 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
             SizedBox(height: 15),
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(200, 40),
@@ -116,6 +123,7 @@ class _LoginViewState extends State<LoginView> {
               },
               child: Text('Entrar'),
             ),
+
             SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

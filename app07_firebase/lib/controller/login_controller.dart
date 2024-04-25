@@ -11,34 +11,59 @@ class LoginController {
   // Adiciona a conta de um novo usuário no serviço
   // Firebase Authentication
   //
-  criarConta(context, nome, email, senha) {
-
-  }
+  criarConta(context, nome, email, senha) {}
 
   //
   // LOGIN
   //
   login(context, email, senha) {
-
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: email,
+      password: senha,
+    )
+        .then((resultado) {
+      sucesso(context, 'Usuário autenticado com sucesso!');
+    }).catchError((e) {
+      switch (e.code) {
+        case 'invalid-credential':
+          erro(context, 'Email e/ou senha inválida.');
+          break;
+        case 'invalid-email':
+          erro(context, 'O formato do email é inválido.');
+          break;
+        default:
+          erro(context, 'ERRO: ${e.code.toString()}');
+      }
+    });
   }
 
   //
   // ESQUECEU A SENHA
   //
   esqueceuSenha(context, String email) {
+    
+    if (email.isNotEmpty) {
+
+      FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+      
+      sucesso(context,'Email enviado com sucesso!');
+
+    } else {
+      erro(context, 'Favor preencher o campo email.');
+    }
+
   }
 
-    //
+  //
   // LOGOUT
   //
-  logout() {
-  }
+  logout() {}
 
   //
   // ID do Usuário Logado
   //
-  idUsuario() {
-  }
-
-
+  idUsuario() {}
 }
