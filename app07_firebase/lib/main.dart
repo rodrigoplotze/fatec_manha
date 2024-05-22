@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'view/cadastrar_view.dart';
 import 'view/login_view.dart';
+import 'view/principal_view.dart';
 
 Future<void> main() async {
   //
@@ -18,7 +19,7 @@ Future<void> main() async {
 
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => MainApp(),
     ),
   );
@@ -36,6 +37,7 @@ class MainApp extends StatelessWidget {
       routes: {
         'login': (context) => LoginView(),
         'cadastrar': (context) => CadastrarView(),
+        'principal': (context) => PrincipalView(),
       },
     );
   }
